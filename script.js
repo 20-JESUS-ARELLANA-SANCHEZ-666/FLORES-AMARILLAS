@@ -77,4 +77,77 @@
                 particleContainer.appendChild(particle);
             }
 
+            // --- LÓGICA DE MENSAJES FLOTANTES PARA CADA FLOR ---
+
+            // Seleccionar las 3 flores principales
+            const flor1 = document.querySelector('.flower--1');
+            const flor2 = document.querySelector('.flower--2');
+            const flor3 = document.querySelector('.flower--3');
+
+            // Seleccionar los modales y botones de cierre
+            const modales = document.querySelectorAll('.mensaje-flotante');
+            const modal1 = document.getElementById('mensaje-1');
+            const modal2 = document.getElementById('mensaje-2');
+            const modal3 = document.getElementById('mensaje-3');
+            const botonesCerrar = document.querySelectorAll('.cerrar-mensaje');
+
+            // Función para cerrar todos los modales
+            function cerrarTodosLosMensajes() {
+                modales.forEach(modal => {
+                    modal.classList.remove('activo');
+                });
+            }
+
+            // Función auxiliar para abrir el modal si la carta/experiencia ya fue iniciada
+            function abrirModalFlor(modal) {
+                if (!document.body.classList.contains('container') && modal) {
+                    cerrarTodosLosMensajes();
+                    modal.classList.add('activo');
+                }
+            }
+
+            // Eventos de clic para cada una de las 3 flores
+            if (flor1) {
+                flor1.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    abrirModalFlor(modal1);
+                });
+            }
+
+            if (flor2) {
+                flor2.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    abrirModalFlor(modal2);
+                });
+            }
+
+            if (flor3) {
+                flor3.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    abrirModalFlor(modal3);
+                });
+            }
+
+            // Evento para los botones de cerrar
+            botonesCerrar.forEach(boton => {
+                boton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    cerrarTodosLosMensajes();
+                });
+            });
+
+            // Evitar que clics dentro de la tarjeta cierren el modal
+            document.querySelectorAll('.tarjeta-carta').forEach(tarjeta => {
+                tarjeta.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+            // Cerrar el modal al hacer clic en el fondo oscuro (fuera del marco)
+            modales.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    cerrarTodosLosMensajes();
+                });
+            });
+
         });
